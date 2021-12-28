@@ -1,89 +1,93 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Graph.h"
-
-
-int fromCharToInt(int c){
+#define A 65
+#define n 110
+int fromCharToInt(char c){
     return ((int) c-48);
 }
 
 
 int main()
 {
-    int input = NULL;
+    char input;
     Graph* graph = Graph_alloc();
-    while(input != '~')
+    while(input != '\n')
     {
-        scanf("%d",&input);
-        if(input == 65) //ascii[A] = 65
+        scanf("%c",&input);
+        if(input == A) //ascii[A] = 65
         {
             int size;
             scanf("%d",&size);
             for(int i=0; i<size; i++){
                 Graph_insertNode(graph,i);
             }
-            printf("size: %d, input: %c\n",size,input);
         }
-        while(input == 110){ // ascii[n] = 110
+        while(input == n){ // ascii[n] = 110
             int id, dest, weight;
             scanf("%d",&id);
-            scanf("%d",&input);
+            scanf("%c",&input);
+            scanf("%c",&input);
+            //char charid = '0'+id;
             while(input >= 48 && input <= 57){
-                dest = fromCharToInt(input);
+                dest =fromCharToInt(input);
+                printf("%d\n",dest);
                 scanf("%d",&weight);
                 Graph_insertEdge(graph,id,dest, weight);
-                scanf("%d",&input);
+                scanf("%c",&input);
+                scanf("%c",&input);
             }
         }
-        if(input == 66){  //ascii[B] = 66
-            int id, dest, weight;
-            scanf("%d",&id);
+
+        // if(input == 66){  //ascii[B] = 66
+        //     int id, dest, weight;
+        //     scanf("%d",&id);
             /**
              * Make new Node --> ID.
              */
-            scanf("%d",&input);
-            while(input >= 48 && input <= 57){
-                dest = fromCharToInt(input);
-                scanf("%d",&weight);
+            // scanf("%d",&input);
+            // while(input >= 48 && input <= 57){
+            //     dest = fromCharToInt(input);
+            //     scanf("%d",&weight);
                 /**
                  * Here we will do function that will add edge to node "id". and reapet this
                  */
-            }
-        }
-        if(input == 68){  // ascii[D] = 68
-            int id;
-            scanf("%d",&id);
+        //     }
+        // }
+        // if(input == 68){  // ascii[D] = 68
+        //     int id;
+        //     scanf("%d",&id);
             /**
              * Here we will delete node "id" from our graph.
              */
-        }
-        if(input == 83){  // ascii[S] = 83
+        // }
+        // if(input == 83){  // ascii[S] = 83
             /**
              * Here we will check the shortest path from source to destination.
              */
-            int source, destination;
-            scanf("%d",&source);
-            scanf("%d",&destination);
+            // int source, destination;
+            // scanf("%d",&source);
+            // scanf("%d",&destination);
             /**
              * dijkstra  Function Here int shortestPath(int id1, int id2);
              */
-        }
-        if(input == 84){  // ascii[T] = 84
+        // }
+        // if(input == 84){  // ascii[T] = 84
             /**
              * TSP algorithm // k <= 6.
              */
-            int size;
-            scanf("%d",&size);
-            int nodesTsp[size];
-            for(int i=0; i<size; i++){
-                scanf("%d", nodesTsp[i]);
-            }
+            // int size;
+            // scanf("%d",&size);
+            // int nodesTsp[size];
+            // for(int i=0; i<size; i++){
+            //     scanf("%d", nodesTsp[i]);
+            // }
             /**
              * Tsp algorithm - int* tsp(int ids[]); (return pointer to an array - all the nodes {dont mind the order}).
              * Maybe an dynamic algorithm will be the best here -- 6! permutations
              */
-        }
-    }
-    //Graph_print(graph);
+    //     }
+     }
+    Graph_print(graph);
     Graph_free(graph);
 }
