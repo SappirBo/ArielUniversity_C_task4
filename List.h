@@ -57,7 +57,7 @@ double E_firstEdge(const Graph* g);
 /*
  * Prints the list to the standard output.
  */
-void Graph_print(const List* list);
+void Graph_print(const Graph* g);
 
 /*
  * Checks if two lists have the same elements
