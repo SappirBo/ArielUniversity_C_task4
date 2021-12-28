@@ -139,6 +139,9 @@ Node* getNode(const Graph* g, int id) {
 }
 
 void deleteNode(Graph* g, int id){
+	if(!getNode(g,id)){
+		return;
+	}
 	Node* ptr = g->_headv;
 	Edge* tmp =NULL;
     while(ptr){
@@ -177,6 +180,7 @@ void deleteNode(Graph* g, int id){
 		printf("%d\n",ptr->_data);
 		
     }
+	Graph_print(g);
 	Edge* ep = g->_heade;
 	while(ep)
 	{
