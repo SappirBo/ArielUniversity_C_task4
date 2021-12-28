@@ -126,6 +126,15 @@ void Graph_print(const Graph* g) {
 	printf("|| edge size:%zu\n",g->_esize);
 }
 
+Node* getNode(const Graph* g, int id) {
+    node ptr = g->_headv;
+    int index = 0;
+    while(index++ <= id){
+        ptr = ptr._next;
+    }
+    return ptr;
+}
+
 // int List_equal(const List* list1, const List* list2) {
 // 	const int eq= 0;
 // 	const int neq= 1;
@@ -153,4 +162,14 @@ void Graph_print(const Graph* g) {
 // 	}
 // 	return ret;
 // }
+
+
 //------------------------------------------------
+// Function implementation
+//------------------------------------------------
+
+int shortestPath(const Graph* g, int id1, int id2){
+    node src = getNode(g, id1);
+    node dest = getNode(g, id2);
+
+}
