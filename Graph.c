@@ -140,50 +140,79 @@ Node* getNode(const Graph* g, int id) {
 
 void deleteNode(Graph* g, int id){
 	Node* ptr = g->_headv;
+	Edge* tmp =NULL;
     while(ptr){
 		if(ptr->_data==id)
 		{
-			Node* deletednode =ptr;
-			g->_headv=ptr->_next;
+			Node* deletednode = ptr;
+			g->_headv = ptr->_next;
+			printf("HEAD: %d\n",g->_headv->_data);
 			Node_free(deletednode);
+			g->_size--;
+			break;
 		}
 		else if(ptr->_next->_data==id)
 		{
+			
 			Node* deletednode =ptr->_next;
 			if(deletednode->_next==NULL)
 			{
 				ptr->_next=NULL;
 				Node_free(deletednode);
+				g->_size--;
+				break;
 			}
 			else
 			{
 				ptr->_next=ptr->_next->_next;
 				Node_free(deletednode);
+				g->_size--;
+				break;
 			}
 		}
-        ptr = ptr->_next;
+	
+	
+        	ptr = ptr->_next;
+		
 		printf("%d\n",ptr->_data);
 		
     }
 	Edge* ep = g->_heade;
 	while(ep)
 	{
+		if(ep->_next==NULL){
+				break;
+			}
 		if(ep->_dest==id||ep->_src==id){
+			tmp = ep->_next;
 			Edge* deletedEdge =ep;
 			g->_heade=ep->_next;
 			Edge_free(deletedEdge);
+			g->_esize--;
+			
 						
 		}else if(ep->_next->_src==id||ep->_next->_dest==id){
 			Edge* deletedEdge = ep->_next;
 			if(deletedEdge->_next==NULL){
 				ep->_next=NULL;
 				Edge_free(deletedEdge);
+				g->_esize--;
+				break;
 			}else{
 				ep->_next=ep->_next->_next;
 				Edge_free(deletedEdge);
+				g->_esize--;
 			}
 		}
-		ep = ep->_next;
+		if(tmp){
+			ep = tmp;
+			printf("TMP SRC: %d\n",tmp->_src);
+			tmp = NULL;
+			
+		}else{
+			printf("EP SRC: %d\n",ep->_src);
+			ep = ep->_next;
+		}
 	}
 }
 
