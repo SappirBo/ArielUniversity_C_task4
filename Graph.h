@@ -69,4 +69,31 @@ void Graph_print(const Graph* g);
  */
 // List* List_clone(const List* list);
 
-
+/**
+ *  _________Task Algorithms:___________
+ */
+/*
+ * For A - create a new graph.
+ * then using Graph_insertEdge to add edges.
+ */
+void MakeGraph(Node* Head);
+/*
+ * For B - adding a new node to the graph.
+ */
+void addNode(Node* Head);
+/*
+ * For D - delete node from the graph
+ */
+void deleteNode(int id);
+/*
+ * For S -
+ * Here we will check the shortest path from source to destination.
+ * dijkstra  Function Here int shortestPath(int source, int destination);
+ */
+int shortestPath(int id1, int id2);
+/*
+ * For T -
+ * Tsp algorithm - int* tsp(int ids[]); (return pointer to an array - all the nodes {dont mind the order}).
+ * Maybe a dynamic algorithm will be the best here -- 6! permutations
+ */
+int* tsp(int ids[]);
