@@ -17,6 +17,7 @@ int main(int argc, char* argv[]) {
 				  
 	  
 	Graph_free(gPtr1);
-	  
+
+	Graph_print(gPtr1);
 	return 0;
 }
