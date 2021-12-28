@@ -138,6 +138,55 @@ Node* getNode(const Graph* g, int id) {
     return NULL;
 }
 
+void deleteNode(Graph* g, int id){
+	Node* ptr = g->_headv;
+    while(ptr){
+		if(ptr->_data==id)
+		{
+			Node* deletednode =ptr;
+			g->_headv=ptr->_next;
+			Node_free(deletednode);
+		}
+		else if(ptr->_next->_data==id)
+		{
+			Node* deletednode =ptr->_next;
+			if(deletednode->_next==NULL)
+			{
+				ptr->_next=NULL;
+				Node_free(deletednode);
+			}
+			else
+			{
+				ptr->_next=ptr->_next->_next;
+				Node_free(deletednode);
+			}
+		}
+        ptr = ptr->_next;
+		printf("%d\n",ptr->_data);
+		
+    }
+	Edge* ep = g->_heade;
+	while(ep)
+	{
+		if(ep->_dest==id||ep->_src==id){
+			Edge* deletedEdge =ep;
+			g->_heade=ep->_next;
+			Edge_free(deletedEdge);
+						
+		}else if(ep->_next->_src==id||ep->_next->_dest==id){
+			Edge* deletedEdge = ep->_next;
+			if(deletedEdge->_next==NULL){
+				ep->_next=NULL;
+				Edge_free(deletedEdge);
+			}else{
+				ep->_next=ep->_next->_next;
+				Edge_free(deletedEdge);
+			}
+		}
+		ep = ep->_next;
+	}
+}
+
 // int List_equal(const List* list1, const List* list2) {
 // 	const int eq= 0;
 // 	const int neq= 1;

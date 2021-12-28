@@ -84,7 +84,7 @@ void addNode(Node* Head);
 /*
  * For D - delete node from the graph
  */
-void deleteNode(int id);
+void deleteNode(Graph* g,int id);
 /*
  * For S -
  * Here we will check the shortest path from source to destination.
