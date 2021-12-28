@@ -88,12 +88,12 @@ size_t Graph_size(const Graph* g) {
 	return g->_size;
 }
 
-double V_firstData(const Graph* g) {
-	return g->_headv->_data;
+double V_firstNode(const Graph* g) {
+	return *(g->_headv);
 }
 
-double E_firstData(const Graph* g) {
-	return g->_heade->_data;
+double E_firstEdge(const Graph* g) {
+	return *(g->_heade);
 }
 
 void Graph_insertNode(Graph* g,
