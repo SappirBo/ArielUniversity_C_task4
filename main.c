@@ -1,42 +1,87 @@
-//
-// Created by sappi on 12/24/2021.
-//
 #include <stdio.h>
 #include <stdlib.h>
-#include "graph.h"
 
-int toInt(char num)
-{
-    int ans = num-48;
-    return ans; 
+
+int fromCharToInt(char c){
+    return ((int) c-48);
 }
+
 
 int main()
 {
-    node graph;
-    pnode pGraph = &graph;
-
     char input = NULL;
+    /**
+     * Mke Graph Here + Pointer.
+     */
     while(scanf("%c",&input) != EOF)
     {
         if(input == 'A')
         {
-            build_graph_cmd(pGraph);
+            int size;
+            scanf("%d",&size);
+            /**
+             * Function -- void MakeGraph(node Head, size s);
+             */
+        }
+        while(input == 'n'){
+            int id, dest, weight;
+            scanf("%d",&id);
             scanf("%c",&input);
-            while(input == 'n')
-            {
-                scanf("%d",&id);
-                scanf("%c",&input);
-                while(input >= 48 && input <= 57)
-                {
-                    to = toInt(input);
-                    scanf("%c",&input);
-                    weight = toInt(input);
-                    scanf("%c",&input);
-
-                    
-                }
+            while(input >= 48 && input <= 57){
+                dest = fromCharToInt(input);
+                scanf("%d",&weight);
+                /**
+                 * Here we will do function that will add edge to node "id". and reapet this
+                 */
             }
+        }
+        if(input == 'B'){
+            int id, dest, weight;
+            scanf("%d",&id);
+            /**
+             * Make new Node --> ID.
+             */
+            scanf("%c",&input);
+            while(input >= 48 && input <= 57){
+                dest = fromCharToInt(input);
+                scanf("%d",&weight);
+                /**
+                 * Here we will do function that will add edge to node "id". and reapet this
+                 */
+            }
+        }
+        if(input == 'D'){
+            int id;
+            scanf("%d",&id);
+            /**
+             * Here we will delete node "id" from our graph.
+             */
+        }
+        if(input == 'S'){
+            /**
+             * Here we will check the shortest path from source to destination.
+             */
+            int source, destination;
+            scanf("%d",&source);
+            scanf("%d",&destination);
+            /**
+             * dijkstra  Function Here int shortestPath(int id1, int id2);
+             */
+        }
+        if(input == 'T'){
+            /**
+             * TSP algorithm // k <= 6.
+             */
+            int size;
+            scanf("%d",size);
+            int nodesTsp[size];
+            for(int i=0; i<size; i++){
+                scanf("%d", nodesTsp[i]);
+            }
+            /**
+             * Tsp algorithm - int* tsp(int ids[]); (return pointer to an array - all the nodes {dont mind the order}).
+             * Maybe an dynamic algorithm will be the best here -- 6! permutations
+             */
         }
     }
 }
