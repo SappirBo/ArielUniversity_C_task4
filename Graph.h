@@ -14,8 +14,9 @@
 /*
  * Graph represents a Graph data structure.
  */
-struct _graph;
 typedef struct _graph Graph;
+typedef struct _node Node;
+typedef struct _edge Edge;
 
 /*
  * Allocates a new empty Graph.
@@ -42,15 +43,15 @@ void Graph_insertNode(Graph* g, double data);
 /*
 * Inserts an edge in the begining of the edge list
 */
-void Graph_insertEdge(Graph* g, double weight, int src, int dest);
+void Graph_insertEdge(Graph* g, int src, int dest, double weight);
 /*
  * Returns the node list first node.
  */
-double V_firstNode(const Graph* g);
+Node* V_firstNode(const Graph* g);
 /*
  * Returns the edge list first edge.
  */
-double E_firstEdge(const Graph* g);
+Edge* E_firstEdge(const Graph* g);
 /*
  * Prints the list to the standard output.
  */

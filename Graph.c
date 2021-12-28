@@ -1,4 +1,4 @@
-#include "List.h"
+#include "Graph.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -58,10 +58,12 @@ typedef struct _graph {
 	size_t _esize;
 }Graph;
 
-Graph* _alloc() {
+Graph* Graph_alloc() {
 	Graph* p= (Graph*)malloc(sizeof(Graph));
-	p->_head= NULL;
+	p->_headv= NULL;
+	p->_heade= NULL;
 	p->_size= 0;
+	p->_esize=0;
 	return p;
 }
 
@@ -88,12 +90,12 @@ size_t Graph_size(const Graph* g) {
 	return g->_size;
 }
 
-double V_firstNode(const Graph* g) {
-	return *(g->_headv);
+Node* V_firstNode(const Graph* g) {
+	return g->_headv;
 }
 
-double E_firstEdge(const Graph* g) {
-	return *(g->_heade);
+Edge* E_firstEdge(const Graph* g) {
+	return g->_heade;
 }
 
 void Graph_insertNode(Graph* g,
@@ -102,12 +104,12 @@ void Graph_insertNode(Graph* g,
 	++(g->_size);
 }
 
-void Graph_insertEdge(Graph* g, double weight, int src, int dest){
+void Graph_insertEdge(Graph* g, int src, int dest, double weight){
 	g->_heade= Edge_alloc(weight,src,dest,g->_heade);
 	++(g->_esize);
 }
 
-void Graph_print(const List* list) {
+void Graph_print(const Graph* g) {
 	const Node* p= g->_headv;
 	printf("Nodes:\n");
 	while(p) {
