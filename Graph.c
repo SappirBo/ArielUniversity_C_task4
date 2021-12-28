@@ -6,11 +6,11 @@
 // Node implementation
 //------------------------------------------------
 typedef struct _node {
-	double _data;
+	int _data;
 	struct _node* _next;
 } Node;
 
-Node* Node_alloc(double data,
+Node* Node_alloc(int data,
 				 Node* next) {
 	Node* p= (Node*)malloc(sizeof(Node));
 	p->_data= data;
@@ -100,8 +100,7 @@ Edge* E_firstEdge(const Graph* g) {
 	return g->_heade;
 }
 
-void Graph_insertNode(Graph* g,
-					  double data) {
+void Graph_insertNode(Graph* g, int data) {
 	g->_headv= Node_alloc(data,g->_headv);
 	++(g->_size);
 }
@@ -115,7 +114,7 @@ void Graph_print(const Graph* g) {
 	const Node* p= g->_headv;
 	printf("Nodes:\n");
 	while(p) {
-		printf("(%.2f)->",p->_data);
+		printf("(%d)->",p->_data);
 		p= p->_next;
 	}
 	printf("|| size:%zu\n",g->_size);
@@ -130,11 +129,13 @@ void Graph_print(const Graph* g) {
 
 Node* getNode(const Graph* g, int id) {
     Node* ptr = g->_headv;
-    int index = 0;
-    while(index++ <= id){
+    while(ptr){
+		if(ptr->_data==id){
+			return ptr;
+		}
         ptr = ptr->_next;
     }
-    return ptr;
+    return NULL;
 }
 
 // int List_equal(const List* list1, const List* list2) {
@@ -170,8 +171,8 @@ Node* getNode(const Graph* g, int id) {
 // Function implementation
 //------------------------------------------------
 
-int shortestPath(const Graph* g, int id1, int id2){
-    Node* src = getNode(g, id1);
-    Node* dest = getNode(g, id2);
-
-}
+// int shortestPath(const Graph* g, int id1, int id2){
+//     Node* src = getNode(g, id1);
+//     Node* dest = getNode(g, id2);
+// 	return 0;
+// }

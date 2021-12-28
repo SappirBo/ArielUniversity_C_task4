@@ -38,7 +38,7 @@ size_t Graph_size(const Graph* g);
 /*
  * Inserts an node in the begining of the node list.
  */
-void Graph_insertNode(Graph* g, double data);
+void Graph_insertNode(Graph* g, int data);
 
 /*
 * Inserts an edge in the begining of the edge list

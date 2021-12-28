@@ -3,6 +3,7 @@
 #include "Graph.h"
 #define A 65
 #define n 110
+#define B 66
 int fromCharToInt(char c){
     return ((int) c-48);
 }
@@ -31,7 +32,6 @@ int main()
             //char charid = '0'+id;
             while(input >= 48 && input <= 57){
                 dest =fromCharToInt(input);
-                printf("%d\n",dest);
                 scanf("%d",&weight);
                 Graph_insertEdge(graph,id,dest, weight);
                 scanf("%c",&input);
@@ -39,21 +39,26 @@ int main()
             }
         }
 
-        // if(input == 66){  //ascii[B] = 66
-        //     int id, dest, weight;
-        //     scanf("%d",&id);
+        if(input == B){  //ascii[B] = 66
+            int id, dest, weight;
+            scanf("%d",&id);
             /**
              * Make new Node --> ID.
              */
-            // scanf("%d",&input);
-            // while(input >= 48 && input <= 57){
-            //     dest = fromCharToInt(input);
-            //     scanf("%d",&weight);
+            Graph_insertNode(graph,id);
+            scanf("%c",&input);
+            scanf("%c",&input);
+            while(input >= 48 && input <= 57){
+                dest = fromCharToInt(input);
+                scanf("%d",&weight);
                 /**
                  * Here we will do function that will add edge to node "id". and reapet this
                  */
-        //     }
-        // }
+                Graph_insertEdge(graph,id,dest,weight);
+                scanf("%c",&input);
+                scanf("%c",&input);
+            }
+        }
         // if(input == 68){  // ascii[D] = 68
         //     int id;
         //     scanf("%d",&id);
