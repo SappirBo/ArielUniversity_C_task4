@@ -73,16 +73,18 @@ void Graph_free(Graph* g) {
 	Node* p2;
 	while(p1) {
 		p2= p1;
-		p1= p1->_next;
+		p1 = p1->_next;
 		Node_free(p2);
 	}
+	g->_size=0;
 	Edge* ep1= g->_heade;
 	Edge* ep2;
-	while(p1){
-		p2 = p1;
-		p1 = p1->_next;
-		Edge_free(p2);
+	while(ep1){
+		ep2 = ep1;
+		ep1 = ep1->_next;
+		Edge_free(ep2);
 	}
+	g->_esize=0;
 	free(g);
 }
 
