@@ -3,45 +3,45 @@
 #include "Graph.h"
 
 
-int fromCharToInt(char c){
+int fromCharToInt(int c){
     return ((int) c-48);
 }
 
 
 int main()
 {
-    char input = NULL;
+    int input = NULL;
     Graph* graph = Graph_alloc();
-    while(input!='~')
+    while(input != '~')
     {
-        scanf("%c",&input);
-        if(input == 'A')
+        scanf("%d",&input);
+        if(input == 65) //ascii[A] = 65
         {
-            int size=NULL;
+            int size;
             scanf("%d",&size);
             for(int i=0; i<size; i++){
                 Graph_insertNode(graph,i);
             }
             printf("size: %d, input: %c\n",size,input);
         }
-        while(input == 'n'){
+        while(input == 110){ // ascii[n] = 110
             int id, dest, weight;
             scanf("%d",&id);
-            scanf("%c",&input);
+            scanf("%d",&input);
             while(input >= 48 && input <= 57){
                 dest = fromCharToInt(input);
                 scanf("%d",&weight);
                 Graph_insertEdge(graph,id,dest, weight);
-                scanf("%c",&input);
+                scanf("%d",&input);
             }
         }
-        if(input == 'B'){
+        if(input == 66){  //ascii[B] = 66
             int id, dest, weight;
             scanf("%d",&id);
             /**
              * Make new Node --> ID.
              */
-            scanf("%c",&input);
+            scanf("%d",&input);
             while(input >= 48 && input <= 57){
                 dest = fromCharToInt(input);
                 scanf("%d",&weight);
@@ -50,14 +50,14 @@ int main()
                  */
             }
         }
-        if(input == 'D'){
+        if(input == 68){  // ascii[D] = 68
             int id;
             scanf("%d",&id);
             /**
              * Here we will delete node "id" from our graph.
              */
         }
-        if(input == 'S'){
+        if(input == 83){  // ascii[S] = 83
             /**
              * Here we will check the shortest path from source to destination.
              */
@@ -68,7 +68,7 @@ int main()
              * dijkstra  Function Here int shortestPath(int id1, int id2);
              */
         }
-        if(input == 'T'){
+        if(input == 84){  // ascii[T] = 84
             /**
              * TSP algorithm // k <= 6.
              */
