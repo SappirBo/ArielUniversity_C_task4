@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "Graph.h"
 
 
 int fromCharToInt(char c){
@@ -10,18 +11,17 @@ int fromCharToInt(char c){
 int main()
 {
     char input = NULL;
-    /**
-     * Mke Graph Here + Pointer.
-     */
+    Graph* graph = Graph_alloc();
     while(scanf("%c",&input) != EOF)
     {
         if(input == 'A')
         {
             int size;
             scanf("%d",&size);
-            /**
-             * Function -- void MakeGraph(node Head, size s);
-             */
+            for(int i=0; i<size; i++){
+                Graph_insertNode(graph,i)
+            }
+
         }
         while(input == 'n'){
             int id, dest, weight;
@@ -30,9 +30,8 @@ int main()
             while(input >= 48 && input <= 57){
                 dest = fromCharToInt(input);
                 scanf("%d",&weight);
-                /**
-                 * Here we will do function that will add edge to node "id". and reapet this
-                 */
+                Graph_insertEdge(graph,id,dest, weight);
+                scanf("%c",&input);
             }
         }
         if(input == 'B'){
@@ -84,4 +83,5 @@ int main()
              */
         }
     }
+    Graph_free(graph);
 }
