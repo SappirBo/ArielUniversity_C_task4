@@ -12,16 +12,17 @@ int main()
 {
     char input = NULL;
     Graph* graph = Graph_alloc();
-    while(scanf("%c",&input) != EOF)
+    while(input!='~')
     {
+        scanf("%c",&input);
         if(input == 'A')
         {
-            int size;
+            int size=NULL;
             scanf("%d",&size);
             for(int i=0; i<size; i++){
-                Graph_insertNode(graph,i)
+                Graph_insertNode(graph,i);
             }
-
+            printf("size: %d, input: %c\n",size,input);
         }
         while(input == 'n'){
             int id, dest, weight;
@@ -72,7 +73,7 @@ int main()
              * TSP algorithm // k <= 6.
              */
             int size;
-            scanf("%d",size);
+            scanf("%d",&size);
             int nodesTsp[size];
             for(int i=0; i<size; i++){
                 scanf("%d", nodesTsp[i]);
@@ -83,5 +84,6 @@ int main()
              */
         }
     }
+    //Graph_print(graph);
     Graph_free(graph);
 }

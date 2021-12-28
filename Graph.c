@@ -129,10 +129,10 @@ void Graph_print(const Graph* g) {
 }
 
 Node* getNode(const Graph* g, int id) {
-    node ptr = g->_headv;
+    Node* ptr = g->_headv;
     int index = 0;
     while(index++ <= id){
-        ptr = ptr._next;
+        ptr = ptr->_next;
     }
     return ptr;
 }
@@ -171,7 +171,7 @@ Node* getNode(const Graph* g, int id) {
 //------------------------------------------------
 
 int shortestPath(const Graph* g, int id1, int id2){
-    node src = getNode(g, id1);
-    node dest = getNode(g, id2);
+    Node* src = getNode(g, id1);
+    Node* dest = getNode(g, id2);
 
 }
