@@ -1,6 +1,7 @@
 #include "Graph.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "Queue.h"
 
 //------------------------------------------------
 // Node implementation
@@ -224,6 +225,7 @@ void deleteNode(Graph* g, int id){
 	}
 }
 
+
 // int List_equal(const List* list1, const List* list2) {
 // 	const int eq= 0;
 // 	const int neq= 1;
@@ -257,8 +259,7 @@ void deleteNode(Graph* g, int id){
 // Function implementation
 //------------------------------------------------
 
-// int shortestPath(const Graph* g, int id1, int id2){
-//     Node* src = getNode(g, id1);
-//     Node* dest = getNode(g, id2);
-// 	return 0;
-// }
+int shortestPath(const Graph* g, int id1, int id2){
+
+	return 0;
+}

@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Graph.h"
+#include "Queue.h"
+
 #define A 65
 #define n 110
 #define B 66
@@ -102,6 +104,11 @@ int main()
              */
     //     }
      }
+    Queue* q = Queue_alloc();
+    Queue_enqueue(q,5);
+    Queue_print(q);
+    Queue_free(q);
+
     Graph_print(graph);
     Graph_free(graph);
 }
