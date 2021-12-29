@@ -13,6 +13,9 @@ typedef struct _node {
 Node* Node_alloc(int data,
 				 Node* next) {
 	Node* p= (Node*)malloc(sizeof(Node));
+	if(!p){
+		printf("NO SPACE N");
+	}
 	p->_data= data;
 	p->_next= next;
 	return p;
@@ -36,6 +39,9 @@ typedef struct _edge {
 Edge* Edge_alloc(double weight,
 				 int src, int dest, Edge* next) {
 	Edge* p= (Edge*)malloc(sizeof(Edge));
+	if(!p){
+		printf("NO SPACE E");
+	}
 	p->_weight= weight;
 	p->_src= src;
 	p->_dest= dest;
@@ -60,6 +66,9 @@ typedef struct _graph {
 
 Graph* Graph_alloc() {
 	Graph* p= (Graph*)malloc(sizeof(Graph));
+	if(!p){
+		printf("NO SPACE G");
+	}
 	p->_headv= NULL;
 	p->_heade= NULL;
 	p->_size= 0;
@@ -143,13 +152,12 @@ void deleteNode(Graph* g, int id){
 		return;
 	}
 	Node* ptr = g->_headv;
-	Edge* tmp =NULL;
+	Edge** tmp =NULL;
     while(ptr){
 		if(ptr->_data==id)
 		{
 			Node* deletednode = ptr;
 			g->_headv = ptr->_next;
-			printf("HEAD: %d\n",g->_headv->_data);
 			Node_free(deletednode);
 			g->_size--;
 			break;
@@ -180,41 +188,40 @@ void deleteNode(Graph* g, int id){
 		printf("%d\n",ptr->_data);
 		
     }
-	Graph_print(g);
 	Edge* ep = g->_heade;
 	while(ep)
 	{
 		if(ep->_next==NULL){
-				break;
-			}
-		if(ep->_dest==id||ep->_src==id){
-			tmp = ep->_next;
-			Edge* deletedEdge =ep;
-			g->_heade=ep->_next;
+			//Graph_print(g);
+			break;
+		}
+		if(g->_heade->_dest==id||g->_heade->_src==id){
+			tmp = &(g->_heade->_next);
+			Edge* deletedEdge =g->_heade;
+			g->_heade=g->_heade->_next;
 			Edge_free(deletedEdge);
 			g->_esize--;
-			
-						
-		}else if(ep->_next->_src==id||ep->_next->_dest==id){
-			Edge* deletedEdge = ep->_next;
+			ep = g->_heade;						
+		}else if(ep->_next->_src==id||ep->_next->_dest==id){	
+			Edge* deletedEdge = ep->_next;	
 			if(deletedEdge->_next==NULL){
 				ep->_next=NULL;
 				Edge_free(deletedEdge);
 				g->_esize--;
 				break;
 			}else{
-				ep->_next=ep->_next->_next;
+				ep->_next=deletedEdge->_next;
 				Edge_free(deletedEdge);
 				g->_esize--;
+				continue;
 			}
 		}
 		if(tmp){
-			ep = tmp;
-			printf("TMP SRC: %d\n",tmp->_src);
+			ep = *tmp;
+			//printf("TMP SRC: %d\n",*(tmp)->_src);
 			tmp = NULL;
 			
 		}else{
-			printf("EP SRC: %d\n",ep->_src);
 			ep = ep->_next;
 		}
 	}

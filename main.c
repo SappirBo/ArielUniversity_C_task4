@@ -94,7 +94,7 @@ int main()
     //     }
      }
     Graph_print(graph);
-    deleteNode(graph,4);
+    deleteNode(graph,1);
     Graph_print(graph);
     Graph_free(graph);
 }
