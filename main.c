@@ -4,6 +4,7 @@
 #define A 65
 #define n 110
 #define B 66
+#define D 68
 int fromCharToInt(char c){
     return ((int) c-48);
 }
@@ -11,11 +12,14 @@ int fromCharToInt(char c){
 
 int main()
 {
+    int FLAG =0;
     char input;
     Graph* graph = Graph_alloc();
     while(input != '\n')
-    {
-        scanf("%c",&input);
+    {   
+        if(!FLAG){
+            scanf("%c",&input);
+        }
         if(input == A) //ascii[A] = 65
         {
             int size;
@@ -25,6 +29,7 @@ int main()
             }
         }
         while(input == n){ // ascii[n] = 110
+            FLAG =1;
             int id, dest, weight;
             scanf("%d",&id);
             scanf("%c",&input);
@@ -40,6 +45,7 @@ int main()
         }
 
         if(input == B){  //ascii[B] = 66
+            FLAG =1;
             int id, dest, weight;
             scanf("%d",&id);
             /**
@@ -59,13 +65,16 @@ int main()
                 scanf("%c",&input);
             }
         }
-        // if(input == 68){  // ascii[D] = 68
-        //     int id;
-        //     scanf("%d",&id);
+        if(input == D){  // ascii[D] = 68
+            int id;
+            scanf("%d",&id);
             /**
              * Here we will delete node "id" from our graph.
              */
-        // }
+            deleteNode(graph,id);
+            scanf("%c",&input);
+            scanf("%c",&input);
+        }
         // if(input == 83){  // ascii[S] = 83
             /**
              * Here we will check the shortest path from source to destination.
@@ -93,8 +102,6 @@ int main()
              */
     //     }
      }
-    Graph_print(graph);
-    deleteNode(graph,1);
     Graph_print(graph);
     Graph_free(graph);
 }

@@ -183,10 +183,7 @@ void deleteNode(Graph* g, int id){
 		}
 	
 	
-        	ptr = ptr->_next;
-		
-		printf("%d\n",ptr->_data);
-		
+        	ptr = ptr->_next;		
     }
 	Edge* ep = g->_heade;
 	while(ep)
