@@ -52,4 +52,6 @@ int Queue_firstData(const Queue* q);
  */
 void Queue_print(const Queue* q);
 
+int Queue_contains(Queue* q,int data);
+
 

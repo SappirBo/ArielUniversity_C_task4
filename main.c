@@ -7,6 +7,8 @@
 #define n 110
 #define B 66
 #define D 68
+#define S 83
+
 int fromCharToInt(char c){
     return ((int) c-48);
 }
@@ -77,17 +79,20 @@ int main()
             scanf("%c",&input);
             scanf("%c",&input);
         }
-        // if(input == 83){  // ascii[S] = 83
+        if(input == S){  // ascii[S] = 83
             /**
              * Here we will check the shortest path from source to destination.
              */
-            // int source, destination;
-            // scanf("%d",&source);
-            // scanf("%d",&destination);
+            int source, destination;
+            scanf("%d",&source);
+            scanf("%d",&destination);
             /**
              * dijkstra  Function Here int shortestPath(int id1, int id2);
              */
-        // }
+            printf("Dijsktra shortest path: %d \n",shortestPath(graph,source,destination));
+            scanf("%c",&input);
+            scanf("%c",&input);           
+        }
         // if(input == 84){  // ascii[T] = 84
             /**
              * TSP algorithm // k <= 6.
@@ -104,11 +109,15 @@ int main()
              */
     //     }
      }
-    Queue* q = Queue_alloc();
-    Queue_enqueue(q,5);
-    Queue_print(q);
-    Queue_free(q);
+    // Queue* q = Queue_alloc();
+    // Queue_enqueue(q,5);
+    // Queue_enqueue(q,7);
+    // Queue_enqueue(q,9);
+    // int d = Queue_dequeue(q);
+    // printf("deQueued: %d\n",d)
+    // Queue_print(q);
+    // Queue_free(q);
 
-    Graph_print(graph);
-    Graph_free(graph);
+    // Graph_print(graph);
+    // Graph_free(graph);
 }

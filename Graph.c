@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include "Queue.h"
 
+#define Max 1000000 
+
 //------------------------------------------------
 // Node implementation
 //------------------------------------------------
@@ -115,6 +117,7 @@ void Graph_insertNode(Graph* g, int data) {
 	++(g->_size);
 }
 
+
 void Graph_insertEdge(Graph* g, int src, int dest, double weight){
 	g->_heade= Edge_alloc(weight,src,dest,g->_heade);
 	++(g->_esize);
@@ -147,6 +150,42 @@ Node* getNode(const Graph* g, int id) {
     }
     return NULL;
 }
+
+Node* getNodeIndex(const Graph* g, int index) {
+    Node* ptr = g->_headv;
+	int i =0;
+	if(index > Graph_size(g)){
+		return NULL;
+	}
+	else if(index == i){return ptr;}
+	else{
+		while(i<index){
+	        ptr = ptr->_next;
+			i++;
+    	}
+    	return ptr;
+	}
+}
+
+Edge* getEdge(const Graph* g, int src, int dest) {
+	if(src == dest){return NULL;}
+	else{
+		// printf("Got into 'getEdge': src = %d, dest = %d\n",src,dest);
+		Edge* ptr = g->_heade;
+    	while(ptr){
+			// printf("ptr -> dest: %d\n",ptr->_dest);
+			if(ptr->_src == src && ptr -> _dest == dest){
+				return ptr;
+				break;
+			}
+			ptr = ptr->_next;		 
+    	}
+		// printf("got out of while\n");
+    	return 	NULL;
+	}
+}
+
+
 
 void deleteNode(Graph* g, int id){
 	if(!getNode(g,id)){
@@ -225,41 +264,68 @@ void deleteNode(Graph* g, int id){
 	}
 }
 
-
-// int List_equal(const List* list1, const List* list2) {
-// 	const int eq= 0;
-// 	const int neq= 1;
-	
-// 	const Node* p1= list1->_head;
-// 	const Node* p2= list2->_head;
-// 	while(p1) {
-// 		if (p2==NULL||p1->_data!=p2->_data) return neq;
-// 		p1= p1->_next;
-// 		p2= p2->_next;
-// 	}
-// 	if (p2!=NULL) return neq;
-// 	return eq;
-// }
-
-// List* List_clone(const List* list) {
-// 	List* ret= List_alloc();
-// 	const Node* old= list->_head;
-// 	Node** copy= &(ret->_head);
-// 	ret->_size= list->_size;
-// 	while(old) {
-// 		*copy= Node_alloc(old->_data,NULL);
-// 		old= old->_next;
-// 		copy= &((*copy)->_next);
-// 	}
-// 	return ret;
-// }
-
+double min(double a, double b){
+	if(a <0){
+		a=Max;
+	}
+	if(b<0){
+		b=Max;
+	}
+	if(a<b){return a;}
+	else{return b;}
+}
 
 //------------------------------------------------
 // Function implementation
 //------------------------------------------------
 
 int shortestPath(const Graph* g, int id1, int id2){
-
-	return 0;
+	double d[Graph_size(g)];
+	int visit[Graph_size(g)];
+	Queue* q = Queue_alloc();
+	for(int i=0; i<Graph_size(g); i++){
+		d[i] = Max;
+		visit[i]=0;
+	}
+	d[id1] = 0.0;
+	Queue_enqueue(q,id1);
+	while(Queue_size(q))
+	{
+		int ptr = Queue_dequeue(q);
+		visit[ptr] = 1;
+		Edge* e;
+		Node* curr;
+		int in;
+		// if(ptr == id2)
+		// {
+		// 	break;
+		// }
+		if(d[ptr]==Max)
+		{
+			break;
+		}
+		else{
+			for(int i=0; i<Graph_size(g); i++){
+				curr = getNode(g,i);
+				in = curr->_data;
+				if(in == ptr){continue;}
+				else{
+					e = getEdge(g,ptr,in);
+					if(e){
+						double c = d[ptr] + e->_weight;
+						d[i] = min(d[i],c);
+						if(Queue_contains(q,e->_dest) == 0 && visit[e->_dest] == 0){
+							Queue_enqueue(q,in);
+						}
+					}
+				}
+			}
+		}
+	}
+	Queue_free(q);
+	for(int i=0; i<sizeof(d)/sizeof(double);i++){
+		printf("d[%d] = %f\n",i,d[i]);
+	}
+	if(d[id2] == Max){return -1;}
+	else{return d[id2];}
 }
