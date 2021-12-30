@@ -80,6 +80,17 @@ Graph* Graph_alloc() {
 	return p;
 }
 
+Node* getNode(const Graph* g, int id) {
+    Node* ptr = g->_headv;
+    while(ptr){
+		if(ptr->_data==id){
+			return ptr;
+		}
+        ptr = ptr->_next;
+    }
+    return NULL;
+}
+
 void Graph_free(Graph* g) {
 	if (g==NULL) return;
 	Node* p1= g->_headv;
@@ -114,8 +125,52 @@ Edge* E_firstEdge(const Graph* g) {
 }
 
 void Graph_insertNode(Graph* g, int data) {
-	g->_headv= Node_alloc(data,g->_headv);
-	++(g->_size);
+	Node* ptr = getNode(g,data);
+	//Delete all out edges from node
+	if(ptr){
+		Edge** tmp =NULL;
+		Edge* ep = g->_heade;
+		while(ep)
+		{
+			if(ep->_next==NULL){
+				
+				//Graph_print(g);
+				break;
+			}
+			if(g->_heade->_src==data){
+				tmp = &(g->_heade->_next);
+				Edge* deletedEdge =g->_heade;
+				g->_heade=g->_heade->_next;
+				Edge_free(deletedEdge);
+				g->_esize--;
+				ep = g->_heade;						
+			}else if(ep->_next->_src==data){	
+				Edge* deletedEdge = ep->_next;	
+				if(deletedEdge->_next==NULL){
+					ep->_next=NULL;
+					Edge_free(deletedEdge);
+					g->_esize--;
+					break;
+				}else{	
+					ep->_next=deletedEdge->_next;
+					Edge_free(deletedEdge);
+					g->_esize--;
+					continue;
+				}
+			}
+			if(tmp){
+				ep = *tmp;
+				//printf("TMP SRC: %d\n",*(tmp)->_src);
+				tmp = NULL;
+				
+			}else{
+				ep = ep->_next;
+			}
+		}
+	}else{
+		g->_headv= Node_alloc(data,g->_headv);
+		++(g->_size);
+	}
 }
 
 
@@ -141,16 +196,7 @@ void Graph_print(const Graph* g) {
 	printf("|| edge size:%zu\n",g->_esize);
 }
 
-Node* getNode(const Graph* g, int id) {
-    Node* ptr = g->_headv;
-    while(ptr){
-		if(ptr->_data==id){
-			return ptr;
-		}
-        ptr = ptr->_next;
-    }
-    return NULL;
-}
+
 
 Node* getNodeIndex(const Graph* g, int index) {
     Node* ptr = g->_headv;

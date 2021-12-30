@@ -29,6 +29,9 @@ Graph* Graph_alloc();
  * Frees the memory and resources allocated to g.
  * If list==NULL does nothing (same as free).
  */
+
+Node* getNode(const Graph* g, int id);
+
 void Graph_free(Graph* g);
 
 /*

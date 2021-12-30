@@ -19,7 +19,7 @@ int main()
 {
     int FLAG =0;
     char input;
-    Graph* graph = Graph_alloc();
+    Graph* graph=NULL;
     while(input != '\n')
     {   
         if(!FLAG){
@@ -27,6 +27,10 @@ int main()
         }
         if(input == A) //ascii[A] = 65
         {
+            if(graph){
+                Graph_free(graph);
+            }
+            graph = Graph_alloc();
             int size;
             scanf("%d",&size);
             for(int i=0; i<size; i++){
@@ -39,6 +43,10 @@ int main()
             scanf("%d",&id);
             scanf("%c",&input);
             scanf("%c",&input);
+            Node* tmp = getNode(graph,id);
+            if(tmp){
+                Graph_insertNode(graph,id);
+            }
             //char charid = '0'+id;
             while(input >= 48 && input <= 57){
                 dest =fromCharToInt(input);
@@ -95,16 +103,6 @@ int main()
             scanf("%c",&input);           
         }
          if(input == T){  // ascii[T] = 84
-        //     List* l = List_alloc();
-        //     List_insertFirst(l,2);
-        //     List_insertFirst(l,1);
-        //     List_insertFirst(l,3);
-        //     int res = TSP(graph,l);
-        //     printf("TSP: %d\n",res);
-        //     List_free(l);
-        //     break;
-        //  }
-
             /**
              * TSP algorithm // k <= 6.
              */
@@ -126,15 +124,8 @@ int main()
             scanf("%c",&input); 
         }
      }
-    // Queue* q = Queue_alloc();
-    // Queue_enqueue(q,5);
-    // Queue_enqueue(q,7);
-    // Queue_enqueue(q,9);
-    // int d = Queue_dequeue(q);
-    // printf("deQueued: %d\n",d)
-    // Queue_print(q);
-    // Queue_free(q);
 
-    // Graph_print(graph);
+
+   // Graph_print(graph);
     Graph_free(graph);
 }
