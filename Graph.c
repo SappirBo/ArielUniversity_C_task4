@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "Queue.h"
+#include "List.h"
 
 #define Max 1000000 
 
@@ -323,9 +324,138 @@ int shortestPath(const Graph* g, int id1, int id2){
 		}
 	}
 	Queue_free(q);
-	for(int i=0; i<sizeof(d)/sizeof(double);i++){
-		printf("d[%d] = %f\n",i,d[i]);
-	}
+	// for(int i=0; i<sizeof(d)/sizeof(double);i++){
+	// 	printf("d[%d] = %f\n",i,d[i]);
+	// }
 	if(d[id2] == Max){return -1;}
 	else{return d[id2];}
 }
+
+ int TSP(Graph *g,List* l){
+	 if(List_size(l)==0){
+		 return -1;
+	 }else if(List_size(l)==1){
+		 return 0;
+	 }else if(List_size(l)==2){
+		 int min=Max;
+		 for(int i=0;i<2;i++){
+			for(int j=0;j<2;j++){
+				if(i==j){
+					continue;
+				}
+				int first = shortestPath(g,GetNode(l,i),GetNode(l,j));
+				if(first ==-1){
+					continue;
+				}
+				int dist=first;
+				if(dist<min){
+					min = dist;
+				}
+			}
+		 }
+		 return min;
+	 }else if(List_size(l)==3){
+		 int min=Max;
+		 for(int i=0;i<3;i++){
+			 for(int j=0;j<3;j++){
+				 for(int x =0;x<3;x++){
+					 if(x==j||j==i||x==j){
+						 continue;
+					 }
+					int first = shortestPath(g,GetNode(l,i),GetNode(l,j));
+					int second = shortestPath(g,GetNode(l,j),GetNode(l,x));
+					if(first==-1||second==-1){
+						continue;
+					}
+					int dist = first+second;
+					if(dist<min){
+					min = dist;
+				}
+				 }
+			 }
+		 }
+		 return min;
+	 }else if(List_size(l)==4){
+		 int min=Max;
+		 for(int i =0;i<4;i++){
+			 for(int j=0;j<4;j++){
+				 for(int x=0;x<4;x++){
+					 for(int k=0;k<4;k++){
+						 if(i==k||i==j||i==x||j==x||k==x||k==j){
+							 continue;
+						 }
+						int first = shortestPath(g,GetNode(l,i),GetNode(l,j));
+						int second = shortestPath(g,GetNode(l,j),GetNode(l,x));
+						int third = shortestPath(g,GetNode(l,x),GetNode(l,k));
+						if(first==-1||second==-1||third==-1){
+							continue;
+						}
+						int dist = first+second+third;
+						if(dist<min){
+						min = dist;
+						}
+					 }
+				 }
+			 }
+		 }
+		 return min;
+	 }else if(List_size(l)==5){
+		int min=Max;
+		 for(int i =0;i<5;i++){
+			 for(int j=0;j<5;j++){
+				 for(int x=0;x<5;x++){
+					 for(int k=0;k<5;k++){
+						 for(int f = 0;f<5;f++){
+							if(i==k||i==j||i==x||j==x||k==x||k==j||k==f||x==f||j==f||i==f){
+								continue;
+							}
+							int first = shortestPath(g,GetNode(l,i),GetNode(l,j));
+							int second = shortestPath(g,GetNode(l,j),GetNode(l,x));
+							int third = shortestPath(g,GetNode(l,x),GetNode(l,k));
+							int fourth = shortestPath(g,GetNode(l,k),GetNode(l,f));
+							if(first==-1||second==-1||third==-1||fourth==-1){
+								continue;
+							}
+							int dist = first+second+third+fourth;
+							if(dist<min){
+							min = dist;
+							}
+						}
+					}
+				}
+			 }
+		 }
+		 return min;
+	 }else if(List_size(l)==6){
+		int min=Max;
+		 for(int i =0;i<6;i++){
+			 for(int j=0;j<6;j++){
+				 for(int x=0;x<6;x++){
+					 for(int k=0;k<6;k++){
+						 for(int f = 0;f<6;f++){
+						 	for(int z=0;z<6;z++){
+								if(i==k||i==j||i==x||j==x||k==x||k==j||k==f||x==f||j==f||i==f||z==f||z==k||z==x||z==k||z==i){
+									continue;
+								}
+								int first = shortestPath(g,GetNode(l,i),GetNode(l,j));
+								int second = shortestPath(g,GetNode(l,j),GetNode(l,x));
+								int third = shortestPath(g,GetNode(l,x),GetNode(l,k));
+								int fourth = shortestPath(g,GetNode(l,k),GetNode(l,f));
+								int fifth = shortestPath(g,GetNode(l,f),GetNode(l,z));
+								if(first==-1||second==-1||third==-1||fourth==-1||fifth==-1){
+									continue;
+								}
+								int dist = first+second+third+fourth+fifth;
+								if(dist<min){
+								min = dist;
+								}
+							}
+						}
+					 }
+				 }
+			 }
+		 }
+		 return min;
+	 }
+	 return 0;
+ }

@@ -1,7 +1,7 @@
 #pragma once
-
 #include <stdlib.h>
 #include "Queue.h"
+#include "List.h"
 
 /********************************************************************************
  *
@@ -97,4 +97,4 @@ int shortestPath(const Graph* g, int id1, int id2);
  * Tsp algorithm - int* tsp(int ids[]); (return pointer to an array - all the nodes {dont mind the order}).
  * Maybe a dynamic algorithm will be the best here -- 6! permutations
  */
-int* tsp(const Graph* g, int ids[]);
+int TSP(Graph* g, List* l);

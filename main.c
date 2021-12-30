@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include "Graph.h"
 #include "Queue.h"
-
+#include "List.h"
 #define A 65
 #define n 110
 #define B 66
 #define D 68
 #define S 83
+#define T 84
 
 int fromCharToInt(char c){
     return ((int) c-48);
@@ -93,21 +94,37 @@ int main()
             scanf("%c",&input);
             scanf("%c",&input);           
         }
-        // if(input == 84){  // ascii[T] = 84
+         if(input == T){  // ascii[T] = 84
+        //     List* l = List_alloc();
+        //     List_insertFirst(l,2);
+        //     List_insertFirst(l,1);
+        //     List_insertFirst(l,3);
+        //     int res = TSP(graph,l);
+        //     printf("TSP: %d\n",res);
+        //     List_free(l);
+        //     break;
+        //  }
+
             /**
              * TSP algorithm // k <= 6.
              */
-            // int size;
-            // scanf("%d",&size);
-            // int nodesTsp[size];
-            // for(int i=0; i<size; i++){
-            //     scanf("%d", nodesTsp[i]);
-            // }
+            int size;
+            scanf("%d",&size);
+            List* l = List_alloc();
+            int add;
+            for(int i=0; i<size; i++){
+                scanf("%d", &add);
+                List_insertFirst(l,add);
+            }
+            printf("TSP shortest path: %d \n",TSP(graph,l));
             /**
              * Tsp algorithm - int* tsp(int ids[]); (return pointer to an array - all the nodes {dont mind the order}).
              * Maybe an dynamic algorithm will be the best here -- 6! permutations
              */
-    //     }
+            List_free(l);
+            scanf("%c",&input);
+            scanf("%c",&input); 
+        }
      }
     // Queue* q = Queue_alloc();
     // Queue_enqueue(q,5);
@@ -119,5 +136,5 @@ int main()
     // Queue_free(q);
 
     // Graph_print(graph);
-    // Graph_free(graph);
+    Graph_free(graph);
 }
