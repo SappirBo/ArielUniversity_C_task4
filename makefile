@@ -1,6 +1,6 @@
-all:  main
-main: main.o Graph.a Graph.h Queue.a Queue.h List.a List.h
-	gcc -Wall -g -o main main.o Graph.a Queue.a List.a
+all:  graph
+graph: main.o Graph.a Graph.h Queue.a Queue.h List.a List.h
+	gcc -Wall -g -o graph main.o Graph.a Queue.a List.a
 Graph:Graph.a
 Queue:Queue.a
 List: List.a
@@ -21,4 +21,4 @@ main.o: main.c Graph.h Queue.h List.h
 
 .PHONY: clean#.PHONY means that clean is not a file.
 clean:
-	rm -f *.o *.a  main 
+	rm -f *.o *.a  graph 
