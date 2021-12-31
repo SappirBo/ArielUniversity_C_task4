@@ -29,6 +29,7 @@ int main()
         {
             if(graph){
                 Graph_free(graph);
+                FLAG=0;
             }
             graph = Graph_alloc();
             int size;
@@ -65,6 +66,7 @@ int main()
              * Make new Node --> ID.
              */
             Graph_insertNode(graph,id);
+           // Graph_print(graph);
             scanf("%c",&input);
             scanf("%c",&input);
             while(input >= 48 && input <= 57){
@@ -79,6 +81,7 @@ int main()
             }
         }
         if(input == D){  // ascii[D] = 68
+            FLAG =1;
             int id;
             scanf("%d",&id);
             /**
@@ -102,7 +105,11 @@ int main()
             scanf("%c",&input);
             scanf("%c",&input);           
         }
-         if(input == T){  // ascii[T] = 84
+         if(input == T){ 
+
+            FLAG=1;
+             //Graph_print(graph);
+              // ascii[T] = 84
             /**
              * TSP algorithm // k <= 6.
              */
@@ -119,13 +126,15 @@ int main()
              * Tsp algorithm - int* tsp(int ids[]); (return pointer to an array - all the nodes {dont mind the order}).
              * Maybe an dynamic algorithm will be the best here -- 6! permutations
              */
+            //printf("hi3\n");
             List_free(l);
+            //printf("hi4\n");
             scanf("%c",&input);
             scanf("%c",&input); 
         }
      }
 
 
-   // Graph_print(graph);
+    //Graph_print(graph);
     Graph_free(graph);
 }

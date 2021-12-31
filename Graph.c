@@ -196,6 +196,7 @@ void Graph_print(const Graph* g) {
 	printf("|| edge size:%zu\n",g->_esize);
 }
 
+						
 
 
 Node* getNodeIndex(const Graph* g, int index) {
@@ -212,6 +213,18 @@ Node* getNodeIndex(const Graph* g, int index) {
     	}
     	return ptr;
 	}
+}
+
+int getMaxID(const Graph* g){
+	Node* ptr = g->_headv;
+	int max_id=-1;
+	while(ptr){
+		if(ptr->_data>max_id){
+			max_id=ptr->_data;
+		}
+		ptr=ptr->_next;
+	}
+	return max_id;
 }
 
 Edge* getEdge(const Graph* g, int src, int dest) {
@@ -327,54 +340,63 @@ double min(double a, double b){
 //------------------------------------------------
 
 int shortestPath(const Graph* g, int id1, int id2){
-	double d[Graph_size(g)];
-	int visit[Graph_size(g)];
+	double distance[getMaxID(g)+1];
+	int prev[getMaxID(g)+1];
 	Queue* q = Queue_alloc();
-	for(int i=0; i<Graph_size(g); i++){
-		d[i] = Max;
-		visit[i]=0;
-	}
-	d[id1] = 0.0;
-	Queue_enqueue(q,id1);
-	while(Queue_size(q))
-	{
-		int ptr = Queue_dequeue(q);
-		visit[ptr] = 1;
-		Edge* e;
-		Node* curr;
-		int in;
-		// if(ptr == id2)
-		// {
-		// 	break;
-		// }
-		if(d[ptr]==Max)
-		{
-			break;
+	for(int i=0;i<Graph_size(g);i++){
+		Node* curr = getNodeIndex(g,Graph_size(g)-i-1);
+		if(curr){
+			if(curr->_data==id1){
+				distance[curr->_data]=0;
+				Queue_enqueue(q,curr->_data);
+			}else{
+				distance[curr->_data]=Max;
+			}
+			int a = curr->_data;
+			prev[a]=0;
+		
+		}else{
+			continue;
 		}
-		else{
-			for(int i=0; i<Graph_size(g); i++){
-				curr = getNode(g,i);
-				in = curr->_data;
-				if(in == ptr){continue;}
-				else{
-					e = getEdge(g,ptr,in);
-					if(e){
-						double c = d[ptr] + e->_weight;
-						d[i] = min(d[i],c);
-						if(Queue_contains(q,e->_dest) == 0 && visit[e->_dest] == 0){
-							Queue_enqueue(q,in);
+	}
+		while(Queue_size(q)){
+			Edge* e;
+			int smallest = Queue_dequeue(q);
+			if(smallest==id2){
+				while(prev[smallest]){
+					smallest = prev[smallest];
+				}
+			}else if(distance[smallest]==Max){
+				break;
+			}else{
+				for(int j=0;j<Graph_size(g);j++){
+					Node* dest = getNodeIndex(g,j);
+					e = getEdge(g,smallest,dest->_data);
+					if(e){	
+						double d = distance[smallest] + e->_weight;
+						if(d<distance[e->_dest]){
+							distance[e->_dest]=d;
+							prev[e->_dest]=smallest;
+							if(Queue_contains(q,e->_dest) == 0){
+								Queue_enqueue(q,e->_dest);
+							}
 						}
+						
+					}else{
+						continue;
 					}
 				}
+
 			}
 		}
+	
+	if(distance[id2]==Max){
+		Queue_free(q);
+		return -1;
+	}else{
+		Queue_free(q);
+		return distance[id2];
 	}
-	Queue_free(q);
-	// for(int i=0; i<sizeof(d)/sizeof(double);i++){
-	// 	printf("d[%d] = %f\n",i,d[i]);
-	// }
-	if(d[id2] == Max){return -1;}
-	else{return d[id2];}
 }
 
  int TSP(Graph *g,List* l){
@@ -389,7 +411,9 @@ int shortestPath(const Graph* g, int id1, int id2){
 				if(i==j){
 					continue;
 				}
-				int first = shortestPath(g,GetNode(l,i),GetNode(l,j));
+				int ithnode = GetNode(l,i);
+				int jthnode = GetNode(l,j);
+				int first = shortestPath(g,ithnode,jthnode);
 				if(first ==-1){
 					continue;
 				}
@@ -399,17 +423,24 @@ int shortestPath(const Graph* g, int id1, int id2){
 				}
 			}
 		 }
-		 return min;
+		 if(min==Max){
+			 return -1;
+		 }else{
+		 	return min;
+		 }
 	 }else if(List_size(l)==3){
 		 int min=Max;
 		 for(int i=0;i<3;i++){
 			 for(int j=0;j<3;j++){
 				 for(int x =0;x<3;x++){
-					 if(x==j||j==i||x==j){
-						 continue;
-					 }
-					int first = shortestPath(g,GetNode(l,i),GetNode(l,j));
-					int second = shortestPath(g,GetNode(l,j),GetNode(l,x));
+					if(x==j||j==i||x==j||i==x){
+						continue;
+					}
+					int ithnode = GetNode(l,i);
+					int jthnode = GetNode(l,j);
+					int xthnode = GetNode(l,x);
+					int first = shortestPath(g,ithnode,jthnode);
+					int second = shortestPath(g,jthnode,xthnode);
 					if(first==-1||second==-1){
 						continue;
 					}
@@ -419,8 +450,11 @@ int shortestPath(const Graph* g, int id1, int id2){
 				}
 				 }
 			 }
+		 }if(min==Max){
+			 return -1;
+		 }else{
+		 	return min;
 		 }
-		 return min;
 	 }else if(List_size(l)==4){
 		 int min=Max;
 		 for(int i =0;i<4;i++){
@@ -430,9 +464,13 @@ int shortestPath(const Graph* g, int id1, int id2){
 						 if(i==k||i==j||i==x||j==x||k==x||k==j){
 							 continue;
 						 }
-						int first = shortestPath(g,GetNode(l,i),GetNode(l,j));
-						int second = shortestPath(g,GetNode(l,j),GetNode(l,x));
-						int third = shortestPath(g,GetNode(l,x),GetNode(l,k));
+						int ithnode = GetNode(l,i);
+						int jthnode = GetNode(l,j);
+						int xthnode = GetNode(l,x);
+						int kthnode = GetNode(l,k);
+						int first = shortestPath(g,ithnode,jthnode);
+						int second = shortestPath(g,jthnode,xthnode);
+						int third = shortestPath(g,xthnode,kthnode);
 						if(first==-1||second==-1||third==-1){
 							continue;
 						}
@@ -444,7 +482,11 @@ int shortestPath(const Graph* g, int id1, int id2){
 				 }
 			 }
 		 }
-		 return min;
+		 if(min==Max){
+			 return -1;
+		 }else{
+		 	return min;
+		 }
 	 }else if(List_size(l)==5){
 		int min=Max;
 		 for(int i =0;i<5;i++){
@@ -471,7 +513,11 @@ int shortestPath(const Graph* g, int id1, int id2){
 				}
 			 }
 		 }
-		 return min;
+		 if(min==Max){
+			 return -1;
+		 }else{
+		 	return min;
+		 };
 	 }else if(List_size(l)==6){
 		int min=Max;
 		 for(int i =0;i<6;i++){
@@ -501,7 +547,11 @@ int shortestPath(const Graph* g, int id1, int id2){
 				 }
 			 }
 		 }
-		 return min;
+		 if(min==Max){
+			 return -1;
+		 }else{
+		 	return min;
+		 }
 	 }
 	 return 0;
  }
