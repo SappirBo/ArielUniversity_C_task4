@@ -252,7 +252,7 @@ void deleteNode(Graph* g, int id){
 		return;
 	}
 	Node* ptr = g->_headv;
-	Edge** tmp =NULL;
+	Edge* tmp =NULL;
     while(ptr){
 		if(ptr->_data==id)
 		{
@@ -283,7 +283,7 @@ void deleteNode(Graph* g, int id){
 		}
 	
 	
-        	ptr = ptr->_next;		
+        ptr = ptr->_next;		
     }
 	Edge* ep = g->_heade;
 	while(ep)
@@ -293,7 +293,7 @@ void deleteNode(Graph* g, int id){
 			break;
 		}
 		if(g->_heade->_dest==id||g->_heade->_src==id){
-			tmp = &(g->_heade->_next);
+			tmp = (g->_heade->_next);
 			Edge* deletedEdge =g->_heade;
 			g->_heade=g->_heade->_next;
 			Edge_free(deletedEdge);
@@ -314,7 +314,7 @@ void deleteNode(Graph* g, int id){
 			}
 		}
 		if(tmp){
-			ep = *tmp;
+			ep = tmp;
 			//printf("TMP SRC: %d\n",*(tmp)->_src);
 			tmp = NULL;
 			
