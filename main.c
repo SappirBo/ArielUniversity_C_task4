@@ -18,8 +18,8 @@ int fromCharToInt(char c){
 int main()
 {
     int FLAG =0;
-    char input;
-    Graph* graph=NULL;
+    char input = 0;
+    Graph* graph = NULL;
     while(input != '\n')
     {   
         if(!FLAG){
@@ -32,7 +32,7 @@ int main()
                 FLAG=0;
             }
             graph = Graph_alloc();
-            int size;
+            int size = 0;
             scanf("%d",&size);
             for(int i=0; i<size; i++){
                 Graph_insertNode(graph,i);
@@ -40,7 +40,9 @@ int main()
         }
         while(input == n){ // ascii[n] = 110
             FLAG =1;
-            int id, dest, weight;
+            int id = 0;
+            int dest = 0;
+            int weight = 0;
             scanf("%d",&id);
             scanf("%c",&input);
             scanf("%c",&input);
@@ -60,7 +62,9 @@ int main()
 
         if(input == B){  //ascii[B] = 66
             FLAG =1;
-            int id, dest, weight;
+            int id = 0;
+            int dest = 0;
+            int weight = 0;
             scanf("%d",&id);
             /**
              * Make new Node --> ID.
@@ -82,7 +86,7 @@ int main()
         }
         if(input == D){  // ascii[D] = 68
             FLAG =1;
-            int id;
+            int id =0;
             scanf("%d",&id);
             /**
              * Here we will delete node "id" from our graph.
@@ -95,7 +99,8 @@ int main()
             /**
              * Here we will check the shortest path from source to destination.
              */
-            int source, destination;
+            int source = 0;
+            int destination = 0;
             scanf("%d",&source);
             scanf("%d",&destination);
             /**
@@ -113,10 +118,10 @@ int main()
             /**
              * TSP algorithm // k <= 6.
              */
-            int size;
+            int size = 0;
             scanf("%d",&size);
             List* l = List_alloc();
-            int add;
+            int add = 0;
             for(int i=0; i<size; i++){
                 scanf("%d", &add);
                 List_insertFirst(l,add);
